@@ -1,4 +1,4 @@
-# talkative
+# Talkative - A complete personalized chat application for personal and community based people
 
 A new Flutter project.
 
