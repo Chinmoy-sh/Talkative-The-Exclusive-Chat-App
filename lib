@@ -13,6 +13,8 @@
         <option name="PROGUARD_LOGS_FOLDER_RELATIVE_PATH" value="/app/src/main/proguard_logs" />
       </configuration>
     </facet>
+
+
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
