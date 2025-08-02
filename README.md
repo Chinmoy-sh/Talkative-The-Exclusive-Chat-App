@@ -1,7 +1,7 @@
 # Talkative - A Complete Personalized Chat Application For Personal And Community Based People.
 
 # This project is created using the Flutter Framework<br>
-Flutter is widely known for its cross-platform develovment service. 
+Flutter is widely known for its cross-platform develovment service. And that's why it's very popular. This project is also made up with this amazing and functional cross-platform framework.
 
 
 ## Getting Started
@@ -21,4 +21,5 @@ samples, guidance on mobile development, and a full API reference.
 
 Stay connected with us.<br>
 Thank you.
+
 
