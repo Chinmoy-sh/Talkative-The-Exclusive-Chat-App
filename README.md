@@ -25,5 +25,3 @@ samples, guidance on mobile development, and a full API reference.
 
 Stay connected with us.<br>
 Thank you.
-
-
