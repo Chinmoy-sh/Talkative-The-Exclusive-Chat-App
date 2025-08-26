@@ -27,5 +27,3 @@ Stay connected with us.<br>
 Thank you.
 
 
-
-
