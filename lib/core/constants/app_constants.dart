@@ -2,13 +2,18 @@ class AppConstants {
   // App Information
   static const String appName = 'Talkative';
   static const String appVersion = '1.0.0';
-  static const String appDescription = 'Revolutionary Chat Experience';
+  static const String appDescription =
+      'The most advanced and secure chat application';
+  static const String appDeveloper = 'Talkative Team';
+  static const String supportEmail = 'support@talkative.com';
 
   // Hive Box Names
   static const String userBox = 'user_box';
   static const String settingsBox = 'settings_box';
   static const String chatBox = 'chat_box';
   static const String mediaBox = 'media_box';
+  static const String encryptionBox = 'encryption_box';
+  static const String biometricBox = 'biometric_box';
 
   // Firebase Collections
   static const String usersCollection = 'users';
@@ -17,12 +22,18 @@ class AppConstants {
   static const String groupsCollection = 'groups';
   static const String statusCollection = 'status';
   static const String callsCollection = 'calls';
+  static const String contactsCollection = 'contacts';
+  static const String blockedUsersCollection = 'blocked_users';
+  static const String notificationsCollection = 'notifications';
 
   // Firebase Storage Paths
   static const String profilePictures = 'profile_pictures';
   static const String chatMedia = 'chat_media';
   static const String statusMedia = 'status_media';
   static const String documents = 'documents';
+  static const String voiceMessages = 'voice_messages';
+  static const String groupImages = 'group_images';
+  static const String wallpapers = 'wallpapers';
 
   // Message Types
   static const String textMessage = 'text';
@@ -35,15 +46,21 @@ class AppConstants {
   static const String voiceMessage = 'voice';
   static const String stickerMessage = 'sticker';
   static const String gifMessage = 'gif';
+  static const String pollMessage = 'poll';
+  static const String replyMessage = 'reply';
+  static const String forwardMessage = 'forward';
 
   // Chat Types
   static const String privateChat = 'private';
   static const String groupChat = 'group';
   static const String broadcastChat = 'broadcast';
+  static const String channelChat = 'channel';
 
   // Call Types
   static const String voiceCall = 'voice';
   static const String videoCall = 'video';
+  static const String groupVoiceCall = 'group_voice';
+  static const String groupVideoCall = 'group_video';
 
   // Status Types
   static const String textStatus = 'text_status';
@@ -149,7 +166,7 @@ class AppConstants {
   // Social Media Links
   static const String githubRepo =
       'https://github.com/Chinmoy-sh/Talkative-The-Exclusive-Chat-App';
-  static const String supportEmail = 'support@talkative.app';
+  static const String websiteUrl = 'https://talkative.app';
   static const String privacyPolicy = 'https://talkative.app/privacy';
   static const String termsOfService = 'https://talkative.app/terms';
 }
