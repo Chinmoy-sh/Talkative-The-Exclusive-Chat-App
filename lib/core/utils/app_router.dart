@@ -13,6 +13,7 @@ import '../../features/groups/screens/group_creation_screen.dart';
 import '../../features/groups/screens/group_info_screen.dart';
 import '../../features/calls/screens/call_screen.dart';
 import '../../features/status/screens/status_screen.dart';
+import '../../shared/models/chat_model.dart';
 import '../../shared/widgets/error_screen.dart';
 
 class AppRouter {
@@ -59,7 +60,14 @@ class AppRouter {
         return _buildRoute(const ChatHomeScreen(), settings);
 
       case chat:
-        return _buildRoute(const ChatScreen(), settings);
+        final args = settings.arguments as Map<String, dynamic>?;
+        return _buildRoute(
+          ChatScreen(
+            chat: args?['chat'] as ChatModel,
+            otherUserId: args?['otherUserId'] as String?,
+          ),
+          settings,
+        );
 
       case profile:
         return _buildRoute(const ProfileScreen(), settings);

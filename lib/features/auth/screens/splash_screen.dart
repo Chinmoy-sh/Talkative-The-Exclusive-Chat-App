@@ -74,15 +74,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     await Future.delayed(const Duration(milliseconds: 3000));
 
     if (!mounted) return;
-
-    final authService = ref.read(authServiceProvider);
-    final isSignedIn = authService.isSignedIn;
+    bool isSignedIn = false;
+    try {
+      final authService = ref.read(authServiceProvider);
+      isSignedIn = authService.isSignedIn;
+    } catch (_) {
+      // Auth not available (e.g., Firebase not initialized on web)
+      isSignedIn = false;
+    }
 
     if (isSignedIn) {
-      // User is signed in, navigate to home
       Navigator.of(context).pushReplacementNamed(AppRouter.home);
     } else {
-      // User is not signed in, navigate to login
       Navigator.of(context).pushReplacementNamed(AppRouter.login);
     }
   }
