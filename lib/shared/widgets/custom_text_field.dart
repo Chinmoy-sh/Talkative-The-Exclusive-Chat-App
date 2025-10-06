@@ -10,6 +10,8 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final IconData? prefixIcon;
   final Widget? suffixIcon;
+  final IconData? suffixIconData;
+  final VoidCallback? onSuffixTap;
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
@@ -29,6 +31,8 @@ class CustomTextField extends StatefulWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
+    this.suffixIconData,
+    this.onSuffixTap,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.validator,
