@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Flutter Web Development
+  talkative-web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - flutter_cache:/root/.pub-cache
+    environment:
+      - FLUTTER_WEB_PORT=3000
+    command: flutter run -d web-server --web-hostname 0.0.0.0 --web-port 3000
+    networks:
+      - talkative-network
+
+  # Firebase Emulator (for local development)
+  firebase-emulator:
+    image: node:18-alpine
+    ports:
+      - "9099:9099" # Auth Emulator
+      - "8080:8080" # Firestore Emulator
+      - "9199:9199" # Storage Emulator
+      - "5001:5001" # Functions Emulator
+      - "4000:4000" # Emulator Suite UI
+    volumes:
+      - ./firebase:/firebase
+    working_dir: /firebase
+    command: |
+      sh -c "
+        npm install -g firebase-tools &&
+        firebase emulators:start --import=./emulator-data --export-on-exit
+      "
+    environment:
+      - FIREBASE_PROJECT_ID=talkative-dev
+    networks:
+      - talkative-network
+
+  # Redis (for caching and sessions)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - talkative-network
+
+  # PostgreSQL (for additional data storage)
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: talkative_dev
+      POSTGRES_USER: talkative
+      POSTGRES_PASSWORD: talkative_dev_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - talkative-network
+
+volumes:
+  flutter_cache:
+  redis_data:
+  postgres_data:
+
+
+networks:
+  talkative-network:
+    driver: bridge
