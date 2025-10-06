@@ -4,10 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:ui';
+import 'package:flutter/foundation.dart'
+    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
 import 'core/services/notification_service.dart';
+import 'core/config/firebase_options.dart';
 // Auth service imported in providers
 import 'core/utils/app_router.dart';
 import 'features/auth/screens/splash_screen.dart';
@@ -15,8 +19,41 @@ import 'features/auth/screens/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
-  await Firebase.initializeApp();
+  // Global error handling: show friendly UI instead of white screen
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // ignore: avoid_print
+    print(details.exceptionAsString());
+    ErrorWidget.builder = (context) =>
+        TalkativeErrorWidget(errorDetails: details);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    // ignore: avoid_print
+    print('Uncaught zone error: $error');
+    return false; // let Flutter handle after logging
+  };
+
+  // Initialize Firebase with proper options (skip on web if misconfigured)
+  try {
+    if (!kIsWeb) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } else {
+      // On web, Firebase config must be valid; if not set up yet, skip to avoid blank screen
+      try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+      } catch (e) {
+        // Log and continue without Firebase so app still renders
+        // ignore: avoid_print
+        print('Firebase (web) initialization skipped: $e');
+      }
+    }
+  } catch (e) {
+    // ignore: avoid_print
+    print('Firebase initialization error: $e');
+  }
 
   // Initialize Hive for local storage
   await Hive.initFlutter();
@@ -24,8 +61,20 @@ void main() async {
   await Hive.openBox(AppConstants.settingsBox);
   await Hive.openBox(AppConstants.chatBox);
 
-  // Initialize notifications
-  await NotificationService.initialize();
+  // Initialize notifications (mobile/desktop only; skip on web)
+  if (!kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS ||
+          defaultTargetPlatform == TargetPlatform.linux ||
+          defaultTargetPlatform == TargetPlatform.windows)) {
+    try {
+      await NotificationService.initialize();
+    } catch (e) {
+      // ignore: avoid_print
+      print('Notification initialization skipped: $e');
+    }
+  }
 
   runApp(const ProviderScope(child: TalkativeApp()));
 }
