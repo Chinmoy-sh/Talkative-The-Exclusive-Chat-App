@@ -1,0 +1,65 @@
+# Test configuration for Talkative Chat App
+# This file configures dart_test package for comprehensive testing
+
+# Test runner configuration
+reporter: expanded
+coverage: true
+
+# Test timeouts
+timeout: 30s
+test_timeout: 2m
+
+# Platforms to test on
+platforms:
+  - vm
+  - chrome
+
+# Test patterns
+test_on: "!browser"
+
+# Tags for organizing tests
+tags:
+  unit:
+    description: "Unit tests for individual components"
+  integration:
+    description: "Integration tests for component interaction"
+  e2e:
+    description: "End-to-end tests for complete user flows"
+  performance:
+    description: "Performance and load tests"
+  security:
+    description: "Security-related tests"
+
+# Presets for different test suites
+presets:
+  unit:
+    paths: ["test/unit/"]
+    tags: "unit"
+    
+  integration:
+    paths: ["test/integration/"]
+    tags: "integration"
+    timeout: 5m
+    
+  e2e:
+    paths: ["test/e2e/"]
+    tags: "e2e"
+    timeout: 10m
+    
+  performance:
+    paths: ["test/performance/"]
+    tags: "performance"
+    timeout: 15m
+
+# Global test setup
+add_tags:
+  - "talkative-tests"
+
+# Retry configuration
+retry: 2
+
+# Verbose output for CI
+verbose_trace: true
+
+# Randomize test execution order
+test_randomize_ordering_seed: random
